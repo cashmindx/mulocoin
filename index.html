@@ -1,0 +1,524 @@
+Thank you for sharing the new screenshot (image 2.jpg).
+Below is a full
+index.html
+code for a Mulo Coin dashboard, styled and structured to closely match the dark, data-dense, multi-panel layout in your screenshot. This is a static, demo-ready version with placeholder/demo data, live chart widgets, and a modern, professional look.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mulo Coin Quantum Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #101926;
+      --panel: #182232;
+      --panel2: #1e293b;
+      --accent: #00e6a8;
+      --accent2: #ffd700;
+      --text: #fff;
+      --text2: #b0b8c1;
+      --danger: #e74c3c;
+      --success: #00e6a8;
+      --border: #22304a;
+      --red: #e74c3c;
+      --green: #00e6a8;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .dashboard-container {
+      max-width: 1800px;
+      margin: 0 auto;
+      padding: 18px 4px 0 4px;
+      display: flex;
+      flex-direction: row;
+      gap: 14px;
+    }
+    .sidepanel, .rightpanel {
+      width: 260px;
+      min-width: 200px;
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: fit-content;
+    }
+    .mainpanel {
+      flex: 1;
+      background: var(--panel2);
+      border-radius: 12px;
+      padding: 12px 10px 18px 10px;
+      min-width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--panel2);
+      padding: 12px 18px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+    .header .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header .logo img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent2);
+    }
+    .header .logo span {
+      font-size: 1.3em;
+      font-weight: 700;
+      color: var(--accent2);
+      letter-spacing: 1px;
+    }
+    .header .nav {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+    .header .nav button {
+      background: var(--panel);
+      color: var(--text2);
+      border: none;
+      border-radius: 8px;
+      padding: 6px 16px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .header .nav button.active, .header .nav button:hover {
+      background: var(--accent2);
+      color: #222;
+    }
+    .header .user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--panel);
+      border-radius: 16px;
+      padding: 4px 12px;
+      font-size: 1em;
+      color: var(--text2);
+    }
+    .header .user .avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent2);
+      color: #222;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1em;
+    }
+    /* Sidepanel */
+    .sidepanel .section-title {
+      color: var(--accent2);
+      font-weight: 700;
+      margin-bottom: 6px;
+      font-size: 1.05em;
+    }
+    .sidepanel .balance {
+      font-size: 1.2em;
+      font-weight: 700;
+      color: var(--accent2);
+      margin-bottom: 2px;
+    }
+    .sidepanel .balance-eur {
+      color: var(--success);
+      font-size: 1em;
+      font-weight: 600;
+    }
+    .sidepanel .change {
+      color: var(--success);
+      font-size: 0.95em;
+      margin-left: 8px;
+    }
+    .sidepanel .token-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidepanel .token-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 0.98em;
+    }
+    .sidepanel .token-list .icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #222;
+      font-weight: 700;
+      font-size: 0.98em;
+    }
+    .sidepanel .token-list .amount {
+      font-weight: 600;
+      color: var(--accent2);
+    }
+    .sidepanel .wallet-actions input, .sidepanel .wallet-actions select {
+      background: var(--panel2);
+      border: none;
+      border-radius: 8px;
+      color: var(--text);
+      padding: 6px 8px;
+      font-size: 0.98em;
+      margin-bottom: 4px;
+      width: 100%;
+    }
+    .sidepanel .wallet-actions button {
+      background: var(--accent2);
+      color: #222;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 0;
+      font-weight: 700;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 2px;
+      transition: background 0.2s;
+    }
+    .sidepanel .wallet-actions button:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    /* Mainpanel */
+    .mainpanel .row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .mainpanel .col {
+      flex: 1;
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 10px 8px;
+      min-width: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .mainpanel .col .col-title {
+      color: var(--accent2);
+      font-weight: 700;
+      font-size: 1em;
+      margin-bottom: 4px;
+    }
+    .mainpanel .chart-container {
+      width: 100%;
+      min-height: 120px;
+      margin-bottom: 4px;
+    }
+    .mainpanel .market-table, .mainpanel .tx-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.97em;
+    }
+    .mainpanel .market-table th, .mainpanel .market-table td,
+    .mainpanel .tx-table th, .mainpanel .tx-table td {
+      padding: 5px 6px;
+      text-align: left;
+    }
+    .mainpanel .market-table th, .mainpanel .tx-table th {
+      color: var(--accent2);
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+    }
+    .mainpanel .market-table tr, .mainpanel .tx-table tr {
+      border-bottom: 1px solid var(--border);
+    }
+    .mainpanel .market-table td.up { color: var(--green);}
+    .mainpanel .market-table td.down { color: var(--red);}
+    .mainpanel .tx-table td.plus { color: var(--green);}
+    .mainpanel .tx-table td.minus { color: var(--red);}
+    /* Rightpanel */
+    .rightpanel .section-title {
+      color: var(--accent2);
+      font-weight: 700;
+      margin-bottom: 6px;
+      font-size: 1.05em;
+    }
+    .rightpanel .market-list, .rightpanel .news-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .rightpanel .market-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-size: 0.98em;
+    }
+    .rightpanel .market-list .pair {
+      color: var(--text2);
+      font-weight: 600;
+      min-width: 70px;
+    }
+    .rightpanel .market-list .price {
+      color: var(--accent2);
+      font-weight: 700;
+      min-width: 60px;
+    }
+    .rightpanel .market-list .change.up { color: var(--green);}
+    .rightpanel .market-list .change.down { color: var(--red);}
+    .rightpanel .news-list li {
+      margin-bottom: 8px;
+      color: var(--text2);
+      font-size: 0.97em;
+    }
+    .rightpanel .news-list .headline {
+      color: var(--accent2);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .dashboard-container { flex-direction: column; }
+      .sidepanel, .rightpanel { width: 100%; min-width: 0; }
+      .mainpanel { min-width: 0; }
+      .mainpanel .row { flex-direction: column; }
+    }
+    @media (max-width: 700px) {
+      .header { flex-direction: column; gap: 8px; }
+      .dashboard-container { padding: 4px 1px 0 1px; }
+      .mainpanel, .sidepanel, .rightpanel { padding: 6px 2px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <img src="https://userdata-d7b62b.stack.tryrelevance.com/files/temp/WhatsApp%20Image%202025-08-28%20at%2009.10.42%20(3).jpeg" alt="Mulo Coin Logo">
+      <span>Mulo Coin</span>
+    </div>
+    <div class="nav">
+      <button class="active">Dashboard</button>
+      <button>Markets</button>
+      <button>Wallet</button>
+      <button>News</button>
+      <button>Demo Trading</button>
+    </div>
+    <div class="user">
+      <div class="avatar">SM</div>
+      <span>Sophie Moore</span>
+    </div>
+  </div>
+  <!-- Dashboard -->
+  <div class="dashboard-container">
+    <!-- Sidepanel -->
+    <div class="sidepanel">
+      <div>
+        <div class="section-title">Balance</div>
+        <div class="balance">$4,630 USD</div>
+        <div class="balance-eur">2,795 EUR <span class="change">+12%</span></div>
+      </div>
+      <div>
+        <div class="section-title">My Tokens</div>
+        <ul class="token-list">
+          <li><span class="icon">₿</span> <span class="amount">0.2217</span> BTC</li>
+          <li><span class="icon" style="background:#627eea;">Ξ</span> <span class="amount">1.02</span> ETH</li>
+          <li><span class="icon" style="background:#346aa9;">X</span> <span class="amount">500</span> XRP</li>
+          <li><span class="icon" style="background:#b8b8b8;">Ł</span> <span class="amount">12.5</span> LTC</li>
+          <li><span class="icon" style="background:#1c75bc;">D</span> <span class="amount">20</span> DASH</li>
+          <li><span class="icon" style="background:var(--accent2);">M</span> <span class="amount">1,000</span> MULO</li>
+        </ul>
+      </div>
+      <div class="wallet-actions">
+        <div class="section-title">Wallet Actions</div>
+        <input type="text" placeholder="Recipient Address">
+        <input type="number" min="0" step="any" placeholder="Amount (BTC)">
+        <button>SEND</button>
+        <input type="text" placeholder="Your BTC Address">
+        <button>RECEIVE</button>
+      </div>
+    </div>
+    <!-- Mainpanel -->
+    <div class="mainpanel">
+      <div class="row">
+        <div class="col">
+          <div class="col-title">Mulo Coin Price Chart</div>
+          <div class="chart-container">
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container">
+              <div id="tradingview_cryptochart"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+              <script type="text/javascript">
+              new TradingView.widget({
+                "width": "100%",
+                "height": 140,
+                "symbol": "BINANCE:BTCUSDT",
+                "interval": "60",
+                "timezone": "Etc/UTC",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#182232",
+                "enable_publishing": false,
+                "allow_symbol_change": true,
+                "container_id": "tradingview_cryptochart"
+              });
+              </script>
+            </div>
+            <!-- TradingView Widget END -->
+          </div>
+        </div>
+        <div class="col">
+          <div class="col-title">Markets Overview</div>
+          <table class="market-table">
+            <thead>
+              <tr>
+                <th>Pair</th>
+                <th>Price</th>
+                <th>24h %</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>MULO/USD</td>
+                <td>$1.23</td>
+                <td class="up">+2.1%</td>
+              </tr>
+              <tr>
+                <td>MULO/EUR</td>
+                <td>€1.12</td>
+                <td class="down">-0.8%</td>
+              </tr>
+              <tr>
+                <td>MULO/BTC</td>
+                <td>0.000031</td>
+                <td class="up">+0.5%</td>
+              </tr>
+              <tr>
+                <td>MULO/ETH</td>
+                <td>0.00047</td>
+                <td class="up">+1.2%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="col-title">Demo Trading (Virtual Funds)</div>
+          <form onsubmit="event.preventDefault();alert('Demo trade executed! (This is a simulation)');" style="display:flex;gap:8px;flex-wrap:wrap;">
+            <select>
+              <option>Buy</option>
+              <option>Sell</option>
+            </select>
+            <input type="number" min="1" max="1000" step="1" placeholder="Amount (MULO)" required>
+            <select>
+              <option>MULO/USD</option>
+              <option>MULO/EUR</option>
+              <option>MULO/BTC</option>
+              <option>MULO/ETH</option>
+            </select>
+            <button style="background:var(--accent2);color:#222;border:none;border-radius:8px;padding:6px 14px;font-weight:700;cursor:pointer;">Execute Demo Trade</button>
+          </form>
+          <div style="margin-top:6px; color:var(--text2); font-size:0.95em;">
+            <b>Binary Option:</b> <button onclick="alert('Predict UP or DOWN for the next minute! (Demo only)')" style="background:var(--accent2);color:#222;border:none;border-radius:8px;padding:3px 10px;font-weight:700;cursor:pointer;">Try Now</button>
+          </div>
+        </div>
+        <div class="col">
+          <div class="col-title">Transaction History</div>
+          <table class="tx-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Pair</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2025-08-29</td>
+                <td>Buy</td>
+                <td>MULO/USD</td>
+                <td class="plus">+250</td>
+                <td style="color:var(--success);">Completed</td>
+              </tr>
+              <tr>
+                <td>2025-08-28</td>
+                <td>Sell</td>
+                <td>MULO/EUR</td>
+                <td class="minus">-100</td>
+                <td style="color:var(--success);">Completed</td>
+              </tr>
+              <tr>
+                <td>2025-08-27</td>
+                <td>Buy</td>
+                <td>MULO/BTC</td>
+                <td class="plus">+50</td>
+                <td style="color:var(--success);">Completed</td>
+              </tr>
+              <tr>
+                <td>2025-08-26</td>
+                <td>Buy</td>
+                <td>MULO/ETH</td>
+                <td class="plus">+100</td>
+                <td style="color:var(--success);">Completed</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Rightpanel -->
+    <div class="rightpanel">
+      <div>
+        <div class="section-title">Markets</div>
+        <ul class="market-list">
+          <li><span class="pair">MULO/USD</span> <span class="price">$1.23</span> <span class="change up">+2.1%</span></li>
+          <li><span class="pair">MULO/EUR</span> <span class="price">€1.12</span> <span class="change down">-0.8%</span></li>
+          <li><span class="pair">MULO/BTC</span> <span class="price">0.000031</span> <span class="change up">+0.5%</span></li>
+          <li><span class="pair">MULO/ETH</span> <span class="price">0.00047</span> <span class="change up">+1.2%</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-title">Mulo Coin News</div>
+        <ul class="news-list">
+          <li>
+            <div class="headline">Mulo Coin Launches Demo Trading Platform</div>
+            <div>Practice trading MULO with virtual funds and real-time prices!</div>
+          </li>
+          <li>
+            <div class="headline">Mulo Coin Hits $1.23 on USD Pair</div>
+            <div>Strong demand drives price up 2.1% in 24h.</div>
+          </li>
+          <li>
+            <div class="headline">AGI-Powered Predictions Now Live</div>
+            <div>Try binary options and AI-powered forecasts in the dashboard.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
